@@ -1,0 +1,48 @@
+{
+    "name": "grunt-at-csstidy",
+    "description": "Sorting CSS flies,and make it tidy.",
+    "version": "0.0.1",
+    "homepage": "https://github.com/lightningtgc/grunt-at-csstidy",
+    "author": [
+        {
+            "name": "gctang",
+            "email": "tangguichuan@qq.com",
+            "url": "https://github.com/lightningtgc/"
+        }
+    ]
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lightningtgc/grunt-at-csstidy.git"
+    },
+    "bugs": {
+      "url": "https://github.com/lightningtgc/grunt-at-csstidy/issues"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/lightningtgc/grunt-at-csstidy/blob/master/LICENSE-MIT"
+        }
+    ],
+    "engines": {
+        "node": ">= 0.10.0"
+    },
+    "scripts": {
+        "test": "grunt test"
+    },
+    "dependencies": {
+        "csscomb": "~3.0.0"
+    },
+    "devDependencies": {
+        "grunt": "^0.4.5"
+    },
+    "peerDependencies": {
+        "grunt": "^0.4.5"
+    },
+    "keywords": [
+        "tasks",
+        "csstidy",
+        "alloyteam",
+        "cssorder",
+        "css tools"
+    ]
+}
