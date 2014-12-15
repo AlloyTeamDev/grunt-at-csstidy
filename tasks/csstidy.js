@@ -4,6 +4,7 @@
  * https://github.com/lightingtgc/grunt-at-csstidy
  *
  * Author: gctang
+ * Plugin for CSScomb
  * Licensed under the MIT license.
  */
 
@@ -16,7 +17,7 @@ module.exports = function (grunt) {
     var path = require('path');
     var HOME = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
 
-    grunt.registerMultiTask('csscomb', 'Sorting CSS flies,and make it tidy.', function () {
+    grunt.registerMultiTask('csstidy', 'Sorting CSS flies,and make it tidy.', function () {
       
         var config = grunt.task.current.options().config || path.join(__dirname, '/config/config.json');
 
