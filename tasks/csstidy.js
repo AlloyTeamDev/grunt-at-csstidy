@@ -71,6 +71,14 @@ module.exports = function (grunt) {
 
                         cssSrc = cssSrc.replace(/:\/\//g, '#iihack#');
 
+                         /*
+                         * fix base64 url like: 
+                         * .a { background: url("data:image/png;abcdefg");} 
+                         *
+                         */
+
+                        cssSrc = cssSrc.replace(/data(\s)?:/g, '#iiihack#');
+
                         /*
                          * fix single comment like:  // something 
                          * It can't works in IE, and will cause parse error
@@ -93,6 +101,7 @@ module.exports = function (grunt) {
                         content = comb.processString(cssSrc, { syntax: syntax });
                         content = content.replace(/#ihack#/g, 'progid:');
                         content = content.replace(/#iihack#/g, '://');
+                        content = content.replace(/#iiihack#/g, 'data:');
                     }catch(e){
                         grunt.log.fail('Some error in : '+ src + '\r' + e);
                         return;
