@@ -82,6 +82,17 @@ module.exports = function (grunt) {
                             match = match.replace(/\//g, '#iiiiihack#');
                             return match;
                         });
+                        
+                         /*
+                         * fix multiple line comment include single comment //
+                         * eg: / * sth // another * /
+                         */
+                        cssSrc = cssSrc.replace(/\/\*[\s\S]+?\*\//g, function(match){
+                            grunt.log.ok(match);
+                            /* match.replace('/*', ''); */
+                            match = match.replace(/\/\//g, '#iiiiiihack#');
+                            return  match;
+                        });
 
                         /*
                          * fix single comment like:  // something 
@@ -108,6 +119,7 @@ module.exports = function (grunt) {
                         content = content.replace(/#iiihack#/g, ':');
                         content = content.replace(/#iiiihack#/g, ';');
                         content = content.replace(/#iiiiihack#/g, '/');
+                        content = content.replace(/#iiiiiihack#/g, '//');
                     }catch(e){
                         grunt.log.fail('Some error in : '+ src + '\r' + e);
                         return;
