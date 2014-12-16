@@ -61,22 +61,38 @@ module.exports = function (grunt) {
                          * fix like: .a{ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e6529dda', endColorstr='#e6529dda', GradientType=0)\9;}
                          * which has two semicolon( : ) will cause parse error.
                          */
-                        cssSrc = cssSrc.replace(/progid[\s]*:/g, '#hack');
+                        cssSrc = cssSrc.replace(/progid(\s)?:(\s)?/g, '#ihack#');
+
+                        /*
+                         * fix absolute url path like: 
+                         * .a { background: url("http://www.qq.com/one.png");} 
+                         *
+                         */
+
+                        cssSrc = cssSrc.replace(/:\/\//g, '#iihack#');
 
                         /*
                          * fix single comment like:  // something 
                          * It can't works in IE, and will cause parse error
                          *
                          */
-                        cssSrc = cssSrc.replace(/\/\/.+?(?=\n|\r|$)/g, function(match){
-                            // remove / and \ 
-                            var targetMatch = match.replace(/\\|\//g, ' ');
-                            return '/*' + targetMatch + '*/';
+                        cssSrc = cssSrc.replace(/(^|[^:|'|"|\(])\/\/.+?(?=\n|\r|$)/g, function(match){
+                            var targetMatch;
+                            //handle first line
+                            if (match.charAt(0) !== '/' ) {
+                                // remove first string and / and \ 
+                                targetMatch = match.substr(1).replace(/\\|\//g, '');;
+                                return match.charAt(0) + '/*' + targetMatch + '*/';
+                            } else {
+                                targetMatch = match.replace(/\\|\//g, '');
+                                return '/*' + targetMatch + '*/';
+                            }
+                           
                         });
 
-
                         content = comb.processString(cssSrc, { syntax: syntax });
-                        content = content.replace(/#hack/g, 'progid:');
+                        content = content.replace(/#ihack#/g, 'progid:');
+                        content = content.replace(/#iihack#/g, '://');
                     }catch(e){
                         grunt.log.fail('Some error in : '+ src + '\r' + e);
                         return;
