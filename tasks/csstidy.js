@@ -11,14 +11,14 @@
 'use strict';
 
 module.exports = function (grunt) {
-  
+
     var csscomb = require('csscomb');
     var comb = new csscomb();
     var path = require('path');
     var HOME = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
 
     grunt.registerMultiTask('csstidy', 'Sorting CSS flies,and make it tidy.', function () {
-      
+
         var config = grunt.task.current.options().config || path.join(__dirname, '/config/config.json');
 
         if (config && grunt.file.exists(config)) {
@@ -73,11 +73,15 @@ module.exports = function (grunt) {
 
                          /*
                          * fix base64 url like: 
-                         * .a { background: url("data:image/png;abcdefg");} 
+                         * .a { background: url("data:image/png;base64,iVBOMVEX///////////////+g0jAqu8zdII=");} 
                          *
                          */
-
-                        cssSrc = cssSrc.replace(/data(\s)?:/g, '#iiihack#');
+                        cssSrc = cssSrc.replace(/(?:data)(.*)(?=\))/g, function(match){
+                            match = match.replace(/:/g, '#iiihack#');
+                            match = match.replace(/;/g, '#iiiihack#');
+                            match = match.replace(/\//g, '#iiiiihack#');
+                            return match;
+                        });
 
                         /*
                          * fix single comment like:  // something 
@@ -101,7 +105,9 @@ module.exports = function (grunt) {
                         content = comb.processString(cssSrc, { syntax: syntax });
                         content = content.replace(/#ihack#/g, 'progid:');
                         content = content.replace(/#iihack#/g, '://');
-                        content = content.replace(/#iiihack#/g, 'data:');
+                        content = content.replace(/#iiihack#/g, ':');
+                        content = content.replace(/#iiiihack#/g, ';');
+                        content = content.replace(/#iiiiihack#/g, '/');
                     }catch(e){
                         grunt.log.fail('Some error in : '+ src + '\r' + e);
                         return;
@@ -116,7 +122,7 @@ module.exports = function (grunt) {
                     grunt.file.write(dest, content);
 
                     grunt.log.ok('Done! Sorted file "' + src + '"!');
-                        
+
                 });
             }
         });
