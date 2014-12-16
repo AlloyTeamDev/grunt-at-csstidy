@@ -20,9 +20,8 @@ module.exports = function (grunt) {
     grunt.registerMultiTask('csstidy', 'Sorting CSS flies,and make it tidy.', function () {
 
         var config = grunt.task.current.options().config || path.join(__dirname, '/config/config.json');
-
+        grunt.log.ok('Start soring css...');
         if (config && grunt.file.exists(config)) {
-            grunt.log.ok('Using Alloyteam config file...');
             config = grunt.file.readJSON(config);
         } else {
             grunt.log.ok('Using csscomb config file...');
