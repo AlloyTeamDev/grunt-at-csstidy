@@ -44,20 +44,43 @@ module.exports = function (grunt) {
                 } else {
                     return true;
                 }
-            })
+            });
             
             // is empty?
-            if ( srcs.length === 0 || file.orig.src.length === 0 ) {
+            if ( srcs.length === 0 && file.orig.src.length === 0 ) {
                 grunt.fail.warn( 'Destination (' + dest + ') not written because src files were invalid or empty.' );
             } else {
 
                 srcs.forEach(function (src) {
-
-                    var cssSrc = grunt.file.read(src);//get source css file
+                    var cssSrc = grunt.file.read(src);//get source css file  
                     var syntax = src.split('.').pop();
-                    var content = comb.processString(cssSrc, { syntax: syntax });
+                    var content = '';
                     
-                    grunt.log.ok('Sorting file "' + src + '"...');
+                    try{
+                        /* 
+                         * fix like: .a{ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e6529dda', endColorstr='#e6529dda', GradientType=0)\9;}
+                         * which has two semicolon( : ) will cause parse error.
+                         */
+                        cssSrc = cssSrc.replace(/progid[\s]*:/g, '#hack');
+
+                        /*
+                         * fix single comment like:  // something 
+                         * It can't works in IE, and will cause parse error
+                         *
+                         */
+                        cssSrc = cssSrc.replace(/\/\/.+?(?=\n|\r|$)/g, function(match){
+                            // remove / and \ 
+                            var targetMatch = match.replace(/\\|\//g, ' ');
+                            return '/*' + targetMatch + '*/';
+                        });
+
+
+                        content = comb.processString(cssSrc, { syntax: syntax });
+                        content = content.replace(/#hack/g, 'progid:');
+                    }catch(e){
+                        grunt.log.fail('Some error in : '+ src + '\r' + e);
+                        return;
+                    }
 
                     // remove ^M and fix newLine issue in windows
                     if (process.platform === 'win32') {
@@ -66,9 +89,11 @@ module.exports = function (grunt) {
                     }
 
                     grunt.file.write(dest, content);
+
+                    grunt.log.ok('Done! Sorted file "' + src + '"!');
+                        
                 });
             }
         });
     });
 };
-
