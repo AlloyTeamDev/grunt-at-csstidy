@@ -3,11 +3,11 @@
 
 > Alloyteam 团队规范工具系列——自动整理CSS代码工具。
 
+> grunt-at-csstidy 是基于 Grunt '0.4.x' 与 csscomb '3.x' 的Grunt插件。
+
+> 整合了Alloyteam的团队规范，并解决了部分CSS语法树解析的兼容问题。
+
 ## 上手教程
-
-grunt-at-csstidy是基于Grunt '0.4.x' 的Grunt插件。
-
-在csscomb的基础上整合Alloyteam的团队规范，并解决了部分CSS语法树解析的兼容问题。
 
 如果你之前没用过 [Grunt](http://gruntjs.com/) ，可以参考官方教程 [Getting Started](http://gruntjs.com/getting-started) ，里面会介绍怎么创建 [Gruntfile](http://gruntjs.com/sample-gruntfile) 以及安装Grunt的插件.
 
@@ -27,13 +27,15 @@ grunt.loadNpmTasks('grunt-at-csstidy');
 
 ## 插件详细配置相关
 
-支持特性：
+#### 支持特性：
 
 * 支持单个文件，多个文件的自动化整理
 * 支持文件夹，模糊路径的动态匹配处理
 * 支持CSS,SASS,LESS的文件类型
 
-### 例子：匹配单文件，具体某几个文件
+#### 匹配单文件，具体某几个文件
+
+例子如下：
 
 ```js
 grunt.initConfig({
@@ -56,18 +58,18 @@ grunt.initConfig({
 });
 ```
 
-### 默认按照[Alloyteam的CSS团队规范](http://alloyteam.github.io/code-guide/#css)进行整理
+#### 默认按照[Alloyteam的CSS团队规范](http://alloyteam.github.io/code-guide/#css)进行整理
 
-支持自定义配置文件进行整理，详细配置可参照csscomb，
+支持自定义配置文件进行整理，详细配置可参照[该文档](https://github.com/csscomb/csscomb.js/blob/master/doc/configuration.md)，
 
-通过在 options 中添加config，并指定相应路径。
+具体步骤：通过在 options 中添加config，并指定相应路径。
 
 自定义整理配置例子:
 
 ```js
 grunt.initConfig({
     csstidy: {
-        dist: {
+        custom: {
             options: {
                 config: '/path/config.json'
             },
@@ -79,7 +81,7 @@ grunt.initConfig({
 });
 ```
 
-### 动态配置，支持文件夹模糊匹配
+#### 动态配置，支持文件夹模糊匹配
 
 这是比较常用的配置形式，可以针对整个文件夹进行匹配处理。
 
