@@ -1,5 +1,5 @@
-# grunt-at-csstidy
-================
+# grunt-at-csstidy [![Build Status](https://travis-ci.org/lightningtgc/grunt-at-csstidy.svg?branch=master)](http://travis-ci.org/lightningtgc/grunt-at-csstidy) [![NPM version](https://badge.fury.io/js/grunt-at-csstidy.png)](http://badge.fury.io/js/grunt-at-csstidy)
+
 
 > Alloyteam 团队规范工具系列——自动整理CSS代码工具。
 
