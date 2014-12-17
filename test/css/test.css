@@ -1,0 +1,44 @@
+.test1{
+position: absolute;
+    top: 48px;
+  left: 0rem;
+  bottom: 0px;width: 75px;
+  overflow:hidden;
+  text-align :center;
+  background-color : #f1f1f1;
+  z-index: 99;
+
+  display: none;
+    width: 0px;
+    background-image: url("http://qq.com/img/null.png");
+  height: 11px;
+}
+
+// wrong comment
+
+/* ok */
+.two-some .other::before {
+    content: ' ';
+  background-size: 11px 11px;
+  background-repeat: no-repeat;
+
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e6529dda', endColorstr='#e6529dda', GradientType=0)\9;
+  background-image: url('http://qq.com/img/null.png')
+}
+
+.three
+{
+color:red;/* other comment */
+    background: url("data:image/png;base64,iVBOMVEX///////////////+g0jAqu8zdII=");
+display:block
+}
+
+/*
+.four{
+  border-top:1px;//wrong
+  clear:both;
+  top:0em;
+}
+*/
+
