@@ -1,7 +1,7 @@
 {
     "name": "grunt-at-csstidy",
     "description": "Sorting CSS flies,and make it tidy.",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "homepage": "https://github.com/lightningtgc/grunt-at-csstidy",
     "author": [
         {
@@ -42,6 +42,7 @@
         "tasks",
         "csstidy",
         "alloyteam",
+        "code guide",
         "cssorder",
         "css tools"
     ]
