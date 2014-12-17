@@ -1,4 +1,106 @@
-grunt-at-csstidy
+# grunt-at-csstidy
 ================
 
-Alloyteam CSS coding style formatter tool--grunt plugin
+> Alloyteam 团队规范工具系列——自动整理CSS代码工具。
+
+## 上手教程
+
+grunt-at-csstidy是基于Grunt '0.4.x' 的Grunt插件。
+
+在csscomb的基础上整合Alloyteam的团队规范，并解决了部分CSS语法树解析的兼容问题。
+
+如果你之前没用过 [Grunt](http://gruntjs.com/) ，可以参考官方教程 [Getting Started](http://gruntjs.com/getting-started) ，里面会介绍怎么创建 [Gruntfile](http://gruntjs.com/sample-gruntfile) 以及安装Grunt的插件.
+
+一旦你熟悉这些流程后，将会用到下面的命令：
+
+```shell
+npm install grunt-at-csstidy --save-dev
+```
+
+安装完插件之后，你可以在Gruntfile.js中加上下面的任务来启用这个插件：
+
+```js
+grunt.loadNpmTasks('grunt-at-csstidy');
+```
+
+当然，你如果是用自动加载任务的形式，则不需要添加上面的启用任务。
+
+## 插件详细配置相关
+
+支持特性：
+
+* 支持单个文件，多个文件的自动化整理
+* 支持文件夹，模糊路径的动态匹配处理
+* 支持CSS,SASS,LESS的文件类型
+
+### 例子：匹配单文件，具体某几个文件
+
+```js
+grunt.initConfig({
+    csstidy: {
+        // 任务名（如single，可自定义）
+        single: {
+            files: {
+                // 格式:  ‘目标文件路径’:['源文件路径']
+                // 如需替换文件，则编写时两者路径相同即可
+                'dest/one-resorted.css': ['src/one.css'] // 匹配单个文件
+            }
+        },
+        multi: {
+            files: {
+                'dest/one-resorted.css': ['src/one.css'],// 匹配多个文件
+                'dest/two-resorted.css': ['src/two.css']
+            }
+        }
+    }
+});
+```
+
+### 默认按照[Alloyteam的CSS团队规范](http://alloyteam.github.io/code-guide/#css)进行整理
+
+支持自定义配置文件进行整理，详细配置可参照csscomb，
+
+通过在 options 中添加config，并指定相应路径。
+
+自定义整理配置例子:
+
+```js
+grunt.initConfig({
+    csstidy: {
+        dist: {
+            options: {
+                config: '/path/config.json'
+            },
+            files: {
+                'dest/one-resorted.css': ['src/one.css']
+            }
+        }
+    }
+});
+```
+
+### 动态配置，支持文件夹模糊匹配
+
+这是比较常用的配置形式，可以针对整个文件夹进行匹配处理。
+
+动态匹配例子：
+
+```js
+grunt.initConfig({
+    csstidy: {
+        // dynamic_mappings可自定义，但grunt官方支持该名称的特性，建议保留
+        dynamic_mappings: {
+            expand: true, // 开启动态扩展，保留
+            cwd: '/styles/css/', // 源文件相对于这个路径进行查找
+            src: ['**/*.css', '!*.resorted.css'], // 目标文件，支持模糊与详细的写法，与过滤规则
+            dest: '/dest/css/', // 转换生成的目标路径，如果是替换源文件，则于cwd保持一致
+            ext: '.resorted.css' //生成文件的后缀别名，如果是替换源文件，则可去掉
+        }
+    }
+});
+```
+
+## 修改历史
+
++ v0.1.4：Fix CSS 解析语法树问题
++ v0.1.0: 初始化
